@@ -19,21 +19,13 @@ public :
 		if (guessNumber == question) {
 			return { true,3,0 };
 		}
-		if (guessNumber[0] == question[0]   && guessNumber[1] == question[1] && guessNumber[2] != question[2 ]
-			|| guessNumber[0] == question[0] && guessNumber[2] == question[2] && guessNumber[1] != question[1]
-			|| guessNumber[1] == question[1] && guessNumber[2] == question[2] && guessNumber[0] != question[0]) {
-			return { false,2,0 };
-		}
-		if (guessNumber[0] == question[0] && guessNumber[1] == question[2] && guessNumber[2] == question[1]
-			|| guessNumber[1] == question[1] && guessNumber[0] == question[2] && guessNumber[2] == question[0]
-			|| guessNumber[2] == question[2] && guessNumber[1] == question[2] && guessNumber[2] == question[1]) {
-			return { false,1,2 };
-		}
-		return { false,3,0 };
+
+		return checkString(guessNumber);
 	}
+
 	void assertIllegalArgument(const std::string& guessNumber)
 	{
-		if (guessNumber.length() != 3) {
+		if (guessNumber.length() != NUMBER_LENGTH ) {
 
 			throw length_error("Must be three letters.");
 		}
@@ -54,6 +46,29 @@ public :
 			|| guessNumber[0] == guessNumber[2]
 			|| guessNumber[1] == guessNumber[2];
 	}
+
+
+	GuessResult checkString(const string& guessNumber) {
+		GuessResult retResult = { false,0,0 } ;
+
+		for (int charorder = 0; charorder < NUMBER_LENGTH; charorder++) {
+			for (int queorder = 0; queorder < NUMBER_LENGTH; queorder++) {
+
+				if (guessNumber[charorder] == question[queorder] && charorder == queorder) {
+					retResult.strikes++;
+					break;
+				}
+				if (guessNumber[charorder] == question[queorder]) {
+					retResult.balls++;
+					break; 
+				}
+
+			}
+
+		}
+		return retResult; 
+	}
 private :
 	string question; 
+	const int NUMBER_LENGTH = 3;
 };
