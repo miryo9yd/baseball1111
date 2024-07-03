@@ -14,9 +14,7 @@ public :
 			}
 		}
 			
-		if (guessNumber[0] == guessNumber[1] 
-			|| guessNumber[0] == guessNumber[2]
-			|| guessNumber[1] == guessNumber[2]) {
+		if (isDuplicatedNumber(guessNumber)) {
 
 			throw invalid_argument("Must not have the same nubmer.");
 		}
@@ -24,5 +22,11 @@ public :
 
 
 
+	}
+	bool isDuplicatedNumber(const std::string& guessNumber)
+	{
+		return guessNumber[0] == guessNumber[1]
+			|| guessNumber[0] == guessNumber[2]
+			|| guessNumber[1] == guessNumber[2];
 	}
 };
